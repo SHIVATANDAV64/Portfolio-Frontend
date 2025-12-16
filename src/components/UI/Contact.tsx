@@ -3,7 +3,7 @@ import { Github, Linkedin, Instagram, Copy, Check, Send } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useState, useRef, type FormEvent } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { api, type SocialLink, type AboutContent, submitContact } from '../../lib/api';
+import { api, type SocialLink, submitContact } from '../../lib/api';
 
 // Icon mapping for social platforms
 const getIconForPlatform = (platform: string) => {
@@ -27,7 +27,6 @@ export const Contact = () => {
     });
 
     const { data: socialLinks } = useFetch<SocialLink>(api.getSocialLinks, []);
-    const { data: aboutData } = useFetch<AboutContent>(api.getAbout, []);
 
     const y = useTransform(scrollYProgress, [0, 1], [-50, 50]);
 

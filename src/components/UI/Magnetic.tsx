@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useRef, ReactElement, cloneElement } from 'react';
+import { useRef, type ReactElement } from 'react';
 
 interface MagneticProps {
     children: ReactElement;
