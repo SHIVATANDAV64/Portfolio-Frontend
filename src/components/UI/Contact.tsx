@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Instagram, Copy, Check, Send } from 'lucide-react';
 import { Magnetic } from './Magnetic';
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, type FormEvent } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { api, SocialLink, AboutContent, submitContact } from '../../lib/api';
+import { api, type SocialLink, type AboutContent, submitContact } from '../../lib/api';
 
 // Icon mapping for social platforms
 const getIconForPlatform = (platform: string) => {

@@ -1,7 +1,14 @@
 // API service for fetching content from CMS
-// This uses the Appwrite get-content function
+// Uses Appwrite Functions SDK to call serverless functions
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+import { functions } from './appwrite';
+import { ExecutionMethod } from 'appwrite';
+
+// Function IDs from Appwrite Console
+const FUNCTION_IDS = {
+    GET_CONTENT: import.meta.env.VITE_FUNCTION_GET_CONTENT,
+    SUBMIT_CONTACT: import.meta.env.VITE_FUNCTION_SUBMIT_CONTACT,
+};
 
 export interface ApiResponse<T> {
     success: boolean;
@@ -55,14 +62,7 @@ export interface Experience {
     description: string;
 }
 
-export interface Testimonial {
-    $id: string;
-    name: string;
-    role: string;
-    company: string;
-    content: string;
-    avatar: string;
-}
+
 
 export interface Service {
     $id: string;
@@ -78,11 +78,19 @@ export interface SocialLink {
     icon: string;
 }
 
-// API functions
+// API functions using Appwrite Functions SDK
 const fetchCollection = async <T>(collection: string): Promise<T[]> => {
     try {
-        const response = await fetch(`${API_BASE}/get-content?collection=${collection}`);
-        const data: ApiResponse<T> = await response.json();
+        const execution = await functions.createExecution(
+            FUNCTION_IDS.GET_CONTENT,
+            '',           // body
+            false,        // async
+            `/?collection=${collection}`,  // path with query param
+            ExecutionMethod.GET  // method
+        );
+
+        // Parse the response body
+        const data: ApiResponse<T> = JSON.parse(execution.responseBody);
 
         if (data.success) {
             return data.documents;
@@ -101,7 +109,7 @@ export const api = {
     getSkills: () => fetchCollection<Skill>('skills'),
     getProjects: () => fetchCollection<Project>('projects'),
     getExperience: () => fetchCollection<Experience>('experience'),
-    getTestimonials: () => fetchCollection<Testimonial>('testimonials'),
+
     getServices: () => fetchCollection<Service>('services'),
     getSocialLinks: () => fetchCollection<SocialLink>('social_links'),
 };
@@ -114,12 +122,15 @@ export const submitContact = async (data: {
     message: string;
 }): Promise<{ success: boolean; error?: string }> => {
     try {
-        const response = await fetch(`${API_BASE}/submit-contact`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        return response.json();
+        const execution = await functions.createExecution(
+            FUNCTION_IDS.SUBMIT_CONTACT,
+            JSON.stringify(data),  // body
+            false,                  // async
+            '/',                    // path
+            ExecutionMethod.POST  // method
+        );
+
+        return JSON.parse(execution.responseBody);
     } catch {
         return { success: false, error: 'Network error' };
     }

@@ -1,11 +1,10 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { MagneticButton } from './MagneticButton';
-import { useFetch } from '../../hooks/useFetch';
-import { api, HeroContent, SocialLink } from '../../lib/api';
+import { useHero } from '../../lib/DataProvider';
 
 const letterAnimation = {
-    initial: { y: 100, opacity: 0, filter: 'blur(10px)' },
-    animate: { y: 0, opacity: 1, filter: 'blur(0px)' }
+    initial: { y: 100, opacity: 0 },
+    animate: { y: 0, opacity: 1 }
 };
 
 const AnimatedTitle = ({ text, className, delay = 0 }: { text: string, className?: string, delay?: number }) => {
@@ -45,8 +44,7 @@ const HeroSkeleton = () => (
 );
 
 export const Hero = () => {
-    const { data: heroData, isLoading } = useFetch<HeroContent>(api.getHero, []);
-    const { data: socialLinks } = useFetch<SocialLink>(api.getSocialLinks, []);
+    const { data: heroData, isLoading } = useHero();
 
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 500], [0, 200]);

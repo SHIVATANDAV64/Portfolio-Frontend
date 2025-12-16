@@ -1,15 +1,24 @@
 # Portfolio Frontend
 
-A modern portfolio website built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. All content is dynamically fetched from the CMS.
+Public-facing portfolio website with smooth animations and optimized data loading.
 
 ## Tech Stack
 
-- **React 19** + **TypeScript**
-- **Vite** for fast development
+- **React 19** + **TypeScript** + **Vite**
 - **Tailwind CSS** for styling
 - **Framer Motion** for animations
-- **Three.js** + **React Three Fiber** for 3D elements
+- **GSAP** for loading screen
 - **Lenis** for smooth scrolling
+- **Appwrite SDK** for API calls
+
+## Features
+
+- 🎬 Branded loading screen with GSAP color wipes
+- ⚡ Data prefetching during loading animation
+- 💾 localStorage caching with stale-while-revalidate
+- 📱 Fully responsive design
+- ✨ Custom cursor, parallax effects
+- 📧 Working contact form
 
 ## Setup
 
@@ -18,12 +27,15 @@ A modern portfolio website built with **React**, **TypeScript**, **Vite**, and *
    npm install
    ```
 
-2. Create `.env` file (copy from `.env.example`):
+2. Create `.env.local` file:
    ```env
-   VITE_API_BASE_URL=https://your-appwrite-function-url
+   VITE_APPWRITE_ENDPOINT=https://fra.cloud.appwrite.io/v1
+   VITE_APPWRITE_PROJECT_ID=<project-id>
+   VITE_FUNCTION_GET_CONTENT=get-content
+   VITE_FUNCTION_SUBMIT_CONTACT=submit-contact
    ```
 
-3. Start dev server:
+3. Run dev server:
    ```bash
    npm run dev
    ```
@@ -33,37 +45,31 @@ A modern portfolio website built with **React**, **TypeScript**, **Vite**, and *
    npm run build
    ```
 
-## Features
-
-- 🎨 All content managed via CMS
-- ⚡ Dynamic hero, about, projects, contact sections
-- 📱 Fully responsive design
-- 🌙 Beautiful dark/light aesthetics
-- ✨ Smooth animations and interactions
-- 📧 Working contact form
-
 ## Folder Structure
 
 ```
 src/
 ├── components/
-│   ├── Layout/       # Layout wrappers (SmoothScroll)
-│   └── UI/           # UI components (Hero, About, Work, Contact, etc.)
-├── hooks/            # Custom React hooks
-├── lib/              # API service, utilities
-├── assets/           # Static assets
-└── App.tsx           # Main app component
+│   ├── Layout/           # SmoothScroll wrapper
+│   ├── UI/               # Hero, About, Work, Contact, Footer
+│   └── LoadingScreen.tsx # GSAP loading animation
+├── hooks/                # useFetch, custom hooks
+├── lib/
+│   ├── api.ts            # API service
+│   ├── appwrite.ts       # Appwrite SDK setup
+│   ├── cache.ts          # localStorage caching
+│   └── DataProvider.tsx  # Prefetching context
+└── App.tsx               # Main app
 ```
 
-## Environment Variables
+## Data Flow
 
-| Variable | Description |
-|----------|-------------|
-| `VITE_API_BASE_URL` | Base URL for Appwrite functions |
+1. `LoadingScreen` triggers `prefetchPriority()` during animation
+2. Hero, About, Skills fetched and cached
+3. After animation: Projects, Experience, etc. fetched in background
+4. Subsequent visits load from localStorage cache
+5. Cache auto-refreshes when stale (TTL-based)
 
 ## Deployment
 
-This portfolio is designed to be deployed on:
-- **Vercel** (recommended)
-- **Netlify**
-- **Appwrite Hosting** (coming soon)
+Recommended: **Vercel** or **Netlify**

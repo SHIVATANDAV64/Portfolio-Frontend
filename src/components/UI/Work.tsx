@@ -3,26 +3,7 @@ import { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useFetch } from '../../hooks/useFetch';
-import { api, Project } from '../../lib/api';
-
-// Loading skeleton
-const WorkSkeleton = () => (
-    <section id="work" className="relative h-[300vh] bg-cream">
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-            <div className="absolute top-12 left-6 md:left-20 z-10">
-                <div className="h-16 w-64 bg-charcoal/10 animate-pulse rounded-lg" />
-            </div>
-            <div className="flex gap-4 px-6 md:px-20">
-                {[1, 2].map((i) => (
-                    <div
-                        key={i}
-                        className="h-[60vh] w-[80vw] md:w-[40vw] flex-shrink-0 bg-gray-200 animate-pulse rounded-2xl mx-4 md:mx-8"
-                    />
-                ))}
-            </div>
-        </div>
-    </section>
-);
+import { api, type Project } from '../../lib/api';
 
 const ProjectCard = ({ project }: { project: Project }) => {
     return (
@@ -90,37 +71,49 @@ export const Work = () => {
     const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
     const titleY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
-    if (isLoading) {
-        return <WorkSkeleton />;
-    }
-
-    // If no projects, show a message
-    if (projects.length === 0) {
-        return (
-            <section id="work" className="py-24 md:py-32 px-6 md:px-20 bg-cream">
-                <div className="max-w-7xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-6xl font-serif text-charcoal mb-8">Selected Works</h2>
-                    <p className="text-charcoal/60">Projects coming soon...</p>
-                </div>
-            </section>
-        );
-    }
-
+    // Always render with the ref attached - use conditional content inside
     return (
         <section ref={targetRef} id="work" className="relative h-[300vh] bg-cream">
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <motion.div style={{ y: titleY }} className="absolute top-12 left-6 md:left-20 z-10">
-                    <h2 className="text-4xl md:text-6xl font-serif text-charcoal mix-blend-difference">
-                        Selected Works <span className="text-lg align-top opacity-50">({projects.length.toString().padStart(2, '0')})</span>
-                    </h2>
-                </motion.div>
+            {isLoading ? (
+                // Loading skeleton - inside the same container
+                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                    <div className="absolute top-12 left-6 md:left-20 z-10">
+                        <div className="h-16 w-64 bg-charcoal/10 animate-pulse rounded-lg" />
+                    </div>
+                    <div className="flex gap-4 px-6 md:px-20">
+                        {[1, 2].map((i) => (
+                            <div
+                                key={i}
+                                className="h-[60vh] w-[80vw] md:w-[40vw] flex-shrink-0 bg-gray-200 animate-pulse rounded-2xl mx-4 md:mx-8"
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) : projects.length === 0 ? (
+                // Empty state
+                <div className="sticky top-0 flex h-screen items-center justify-center">
+                    <div className="max-w-7xl mx-auto text-center px-6 md:px-20">
+                        <h2 className="text-4xl md:text-6xl font-serif text-charcoal mb-8">Selected Works</h2>
+                        <p className="text-charcoal/60">Projects coming soon...</p>
+                    </div>
+                </div>
+            ) : (
+                // Actual content
+                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                    <motion.div style={{ y: titleY }} className="absolute top-12 left-6 md:left-20 z-10">
+                        <h2 className="text-4xl md:text-6xl font-serif text-charcoal mix-blend-difference">
+                            Selected Works <span className="text-lg align-top opacity-50">({projects.length.toString().padStart(2, '0')})</span>
+                        </h2>
+                    </motion.div>
 
-                <motion.div style={{ x }} className="flex gap-4 px-6 md:px-20">
-                    {projects.map((project) => (
-                        <ProjectCard key={project.$id} project={project} />
-                    ))}
-                </motion.div>
-            </div>
+                    <motion.div style={{ x }} className="flex gap-4 px-6 md:px-20">
+                        {projects.map((project) => (
+                            <ProjectCard key={project.$id} project={project} />
+                        ))}
+                    </motion.div>
+                </div>
+            )}
         </section>
     );
 };
+

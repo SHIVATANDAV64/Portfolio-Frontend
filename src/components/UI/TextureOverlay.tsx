@@ -1,17 +1,18 @@
-export const TextureOverlay = () => {
+import { memo } from 'react';
+
+// Memoized to prevent re-renders - this is a static overlay
+export const TextureOverlay = memo(() => {
     return (
-        <div className="fixed inset-0 pointer-events-none z-[9990] opacity-[0.03] mix-blend-overlay">
-            <svg className="w-full h-full">
-                <filter id="noise">
-                    <feTurbulence
-                        type="fractalNoise"
-                        baseFrequency="0.8"
-                        numOctaves="3"
-                        stitchTiles="stitch"
-                    />
-                </filter>
-                <rect width="100%" height="100%" filter="url(#noise)" />
-            </svg>
-        </div>
+        <div
+            className="fixed inset-0 pointer-events-none z-[9990] opacity-[0.02]"
+            style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat',
+                backgroundSize: '256px 256px'
+            }}
+        />
     );
-};
+});
+
+TextureOverlay.displayName = 'TextureOverlay';
+
