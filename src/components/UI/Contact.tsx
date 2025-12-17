@@ -176,14 +176,16 @@ export const Contact = () => {
                                 </div>
                             )}
 
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="flex items-center gap-3 px-8 py-4 bg-cream text-charcoal rounded-full font-medium hover:bg-cream/90 transition-colors disabled:opacity-50"
-                            >
-                                {isSubmitting ? 'Sending...' : 'Send Message'}
-                                <Send size={18} />
-                            </button>
+                            <Magnetic strength={0.3}>
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex items-center gap-3 px-8 py-4 bg-cream text-charcoal rounded-full font-medium hover:bg-cream/90 transition-colors disabled:opacity-50"
+                                >
+                                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                                    <Send size={18} />
+                                </button>
+                            </Magnetic>
                         </form>
                     </motion.div>
                 </div>

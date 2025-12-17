@@ -42,10 +42,10 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
-        display: ['Instrument Serif', 'serif'],
-        body: ['Satoshi', 'Inter', 'sans-serif'],
+        sans: ['Pontique', 'Inter', 'sans-serif'],
+        serif: ['Sanely', 'Playfair Display', 'serif'],
+        display: ['Sanely', 'Instrument Serif', 'serif'],
+        body: ['Pontique', 'Satoshi', 'Inter', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out forwards',

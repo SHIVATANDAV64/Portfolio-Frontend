@@ -66,7 +66,7 @@ export const Hero = () => {
                         <AnimatedTitle
                             key={index}
                             text={word}
-                            className={`text-[12vw] md:text-[11vw] leading-[0.85] font-serif font-medium tracking-tight text-charcoal mix-blend-overlay ${index === 1 ? 'italic ml-[10vw]' : ''
+                            className={`text-[12vw] md:text-[11vw] leading-[0.80] font-serif font-medium tracking-tight text-charcoal mix-blend-overlay ${index === 1 ? 'italic ml-[10vw]' : ''
                                 }`}
                             delay={0.2 + index * 0.3}
                         />

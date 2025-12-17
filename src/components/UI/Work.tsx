@@ -24,21 +24,26 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     </picture>
                 </motion.div>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+            {/* Enhanced gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-            <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 flex flex-col justify-end text-white">
+            <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 flex flex-col justify-end">
                 <div className="overflow-hidden">
                     <motion.h3
                         initial={{ y: "100%" }}
                         whileInView={{ y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-3xl md:text-5xl font-serif font-medium mb-2"
+                        className="text-3xl md:text-5xl font-serif font-medium mb-2 text-white drop-shadow-lg"
+                        style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.3)' }}
                     >
                         {project.title}
                     </motion.h3>
                 </div>
-                <div className="flex justify-between items-end border-t border-white/30 pt-4 mt-4">
-                    <div className="flex gap-4 text-sm uppercase tracking-widest opacity-80">
+                <div className="flex justify-between items-end border-t border-white/40 pt-4 mt-4">
+                    <div
+                        className="flex gap-4 text-sm uppercase tracking-widest text-white/90 font-medium"
+                        style={{ textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}
+                    >
                         <span>{project.category}</span>
                         <span>—</span>
                         <span>{project.year}</span>
@@ -48,7 +53,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 cursor-pointer"
+                            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300 cursor-pointer"
                             aria-label={`View project ${project.title}`}
                         >
                             <ArrowUpRight size={20} />

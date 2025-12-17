@@ -225,7 +225,7 @@ export const About = () => {
                                     </div>
 
                                     {/* Experience badge */}
-                                    <motion.div
+                                    {/* <motion.div
                                         initial={{ opacity: 0 }}
                                         whileInView={{ opacity: 1 }}
                                         viewport={{ once: true }}
@@ -236,7 +236,7 @@ export const About = () => {
                                         <span className="text-cream/60 text-sm font-medium tracking-wide">
                                             Creating since 2020
                                         </span>
-                                    </motion.div>
+                                    </motion.div> */}
                                 </div>
                             </div>
                         </div>
