@@ -177,7 +177,7 @@ export const About = () => {
                                             delay: shouldReduceMotion ? 0 : 0.2
                                         }}
                                     >
-                                        <p className="text-lg md:text-xl font-light leading-relaxed text-cream/70">
+                                        <p className="text-lg md:text-xl font-light leading-relaxed text-cream/70 whitespace-pre-wrap">
                                             {about?.description ||
                                                 'My journey exists at the intersection of logic and emotion. I craft digital experiences that blend technical precision with artistic expression.'}
                                         </p>
